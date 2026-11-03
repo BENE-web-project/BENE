@@ -4,15 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Élan — BENE</title>
-<meta name="description" content="BENE — freelance videograaf, fotograaf, sounddesigner en componist uit Gent.">
+<meta name="description" content="Élan — kortfilm. Een project van BENE (Benedict De Clercq, Gent).">
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#000000">
 </head>
 <body>
+<a class="skip" href="#main">Naar inhoud</a>
 <header>
   <a class="logo" href="index.html" aria-label="BENE — home"><img src="logo.png" alt="BENE"></a>
-  <nav><a href="index.html">Home</a><a href="portfolio.html" aria-current="page">Portfolio</a><a href="diensten.html">Diensten</a><a href="over.html">Over</a><a href="contact.html">Contact</a><button id="sound" aria-pressed="false" title="Geluid aan/uit">geluid: uit</button></nav>
+  <nav><a href="index.html">Home</a><a href="portfolio.html" aria-current="page">Portfolio</a><a href="diensten.html">Diensten</a><a href="over.html">Over</a><a href="contact.html">Contact</a></nav>
+  <button id="sound" aria-pressed="false" title="Geluid aan/uit">geluid: uit</button>
 </header>
-<main>
+<main id="main">
 
 <section class="page">
   <p class="label"><a href="portfolio.html">← Portfolio</a></p>
@@ -31,12 +35,13 @@
     <dt>Geluid</dt><dd class="todo">naam</dd>
     <dt>Muziek</dt><dd class="todo">naam</dd>
   </dl>
+  <p class="label end"><a href="portfolio.html">← Alle projecten</a></p>
 </section>
 
 </main>
 <footer>
   <span>© <span id="yr"></span> BENE — Benedict De Clercq</span>
-  <span>Gent, België</span>
+  <span>Gent, België · <a class="mailto" href="#">e-mail</a></span>
 </footer>
 <script src="config.js"></script>
 <script src="site.js"></script>

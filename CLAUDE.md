@@ -3,10 +3,11 @@
 Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games). Statische site in HTML/CSS/JS, geen build-stap, geen frameworks, geen reclame. Gehost gratis (GitHub Pages / Cloudflare Pages), eigen .be-domein later. Taal van de site: Nederlands. Gebruiker (Benedict, "yoyo") werkt hands-on en iteratief en wil beknopte, praktische antwoorden.
 
 ## Structuur
-- index.html (home), portfolio.html, elan.html (projectpagina), diensten.html, over.html, contact.html
+- index.html (home), portfolio.html, elan.html (projectpagina), diensten.html, over.html, contact.html, 404.html
 - style.css (alle stijl), site.js (gedeeld: footer, contact, filmembed, geluid), hero.js (logo-canvas op home), config.js (e-mail, filmEmbedUrl, heroMedia, tiles, social)
 - logo.png = uitsnede van zijn logo (witte horizontale lijnen op transparant). Liefst later vervangen door SVG/hogere resolutie.
-- Pagina's zijn handgeschreven; header/footer staan in elk bestand identiek. Wijzig je het menu, wijzig het overal.
+- Pagina's zijn handgeschreven; header/footer staan in elk bestand identiek (geluidsknop staat naast <nav>, niet erin). Wijzig je het menu, wijzig het overal.
+- favicon.svg = vier witte lijnen op zwart. Layout: één zijmarge --g en max-breedte --max in style.css; header, inhoud en footer lijnen daarop uit.
 
 ## Beslissingen (niet terugdraaien zonder te vragen)
 - Stijl: zwart-wit, dunne lijnen, grotesk + monospace. Het logo is de basis. De stijl staat LOS van de kortfilm Élan: Élan is één project in het portfolio en bepaalt de look niet. Geen schreeflettertype, geen gouden accent.
