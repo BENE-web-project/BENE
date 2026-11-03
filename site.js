@@ -2,6 +2,7 @@
 document.getElementById('yr').textContent=new Date().getFullYear();
 const mail=document.getElementById('mail');
 if(mail){mail.textContent=CONFIG.email;mail.href='mailto:'+CONFIG.email}
+document.querySelectorAll('.mailto').forEach(a=>a.href='mailto:'+CONFIG.email);
 const soc=document.getElementById('social');
 if(soc)soc.innerHTML=CONFIG.social.map(s=>s.url?`<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`:`<span class="todo">${s.label} — link invullen in config.js</span>`).join('');
 
