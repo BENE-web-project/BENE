@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BENE — beeld en geluid</title>
+<meta name="description" content="BENE — freelance videograaf, fotograaf, sounddesigner en componist uit Gent.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html" aria-label="BENE — home"><img src="logo.png" alt="BENE"></a>
+  <nav><a href="index.html" aria-current="page">Home</a><a href="portfolio.html">Portfolio</a><a href="diensten.html">Diensten</a><a href="over.html">Over</a><a href="contact.html">Contact</a><button id="sound" aria-pressed="false" title="Geluid aan/uit">geluid: uit</button></nav>
+</header>
+<main>
+
+<section class="hero">
+  <div id="heroMedia" class="heroMedia" aria-hidden="true"></div>
+  <canvas id="logoCanvas" aria-label="BENE"></canvas>
+  <p class="tag">Video · Foto · Geluid &amp; muziek</p>
+  <p class="hint">Raak de lijnen aan — met geluid aan hoor je ze.</p>
+</section>
+<section class="tiles">
+  <a class="tile" data-k="portfolio" href="portfolio.html"><div class="vis"></div><div class="cap"><span class="n">01</span><span class="t">Portfolio</span><span class="d">Films, geluid, composities</span></div></a>
+  <a class="tile" data-k="diensten" href="diensten.html"><div class="vis"></div><div class="cap"><span class="n">02</span><span class="t">Diensten</span><span class="d">Wat ik voor je kan doen</span></div></a>
+  <a class="tile" data-k="over" href="over.html"><div class="vis"></div><div class="cap"><span class="n">03</span><span class="t">Over</span><span class="d">Wie is BENE</span></div></a>
+  <a class="tile" data-k="contact" href="contact.html"><div class="vis"></div><div class="cap"><span class="n">04</span><span class="t">Contact</span><span class="d">Laat van je horen</span></div></a>
+</section>
+
+</main>
+<footer>
+  <span>© <span id="yr"></span> BENE — Benedict De Clercq</span>
+  <span>Gent, België</span>
+</footer>
+<script src="config.js"></script>
+<script src="site.js"></script>
+<script src="hero.js"></script>
+</body>
+</html>
