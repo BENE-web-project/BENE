@@ -3,8 +3,8 @@
 Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games). Statische site in HTML/CSS/JS, geen build-stap, geen frameworks, geen reclame. Gehost gratis (GitHub Pages / Cloudflare Pages), eigen .be-domein later. Taal van de site: Nederlands. Gebruiker (Benedict, "yoyo") werkt hands-on en iteratief en wil beknopte, praktische antwoorden.
 
 ## Structuur
-- index.html (home), portfolio.html, elan.html (projectpagina), diensten.html, over.html, contact.html, 404.html
-- style.css (alle stijl), site.js (gedeeld: footer, contact, filmembed, geluid), hero.js (logo-canvas op home), config.js (e-mail, heroMedia, tiles, projects, filmEmbedUrl, social)
+- index.html (home), portfolio.html, project.html (sjabloon: project.html?p=<id>), elan.html (eigen pagina van Élan), diensten.html, over.html, contact.html, 404.html
+- style.css (alle stijl), site.js (gedeeld: footer, contact, werken/portfolio/projectpagina, home-beelden, geluid), hero.js (logo-canvas op home), config.js (e-mail, heroMedia, tiles, groepen, portfolio, social)
 - logo.png = uitsnede van zijn logo (witte horizontale lijnen op transparant). Liefst later vervangen door SVG/hogere resolutie.
 - Pagina's zijn handgeschreven; header/footer staan in elk bestand identiek (geluidsknop staat naast <nav>, niet erin). Wijzig je het menu, wijzig het overal.
 - favicon.svg = vier witte lijnen op zwart. Layout: één zijmarge --g en max-breedte --max in style.css; header, inhoud en footer lijnen daarop uit.
@@ -19,12 +19,15 @@ Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games)
 - Tagline "Video · Foto · Geluid & muziek" is voorlopig; hij is er niet van overtuigd.
 - A/B-geluid (ruw vs sounddesign) is geschrapt (te moeilijk).
 - Geen nummers (01, 02…) bij klikbare titels (home-tegels, portfolio). Diensten-lijst heeft ze nog.
-- Portfolio = raster van projectkaarten (beeld 16:9 + titel + type), opgebouwd uit config.js → projects. Project toevoegen = regel toevoegen; url leeg = "binnenkort", img leeg = streepjes.
+- Portfolio = werken gegroepeerd op soort, in de volgorde van config.js → groepen: Film, Commercieel, Documentair, Animatie. Per groep een monospace-kop met dunne lijn, daaronder kaarten (still 16:9 + titel + één regel rol).
+- Werken staan in config.js → portfolio: {id, titel, groep, still, embedUrl, rol, pagina?}. Werk toevoegen = regel toevoegen. still leeg = streepjes; rol leeg = .todo-placeholder.
+- Embed-systeem: alleen werken met een ingevuld embedUrl zijn klikbaar (anders "binnenkort"). De link gaat naar project.html?p=<id> (grote speler met iframe, still, rol), of naar `pagina` als die is ingevuld (Élan → elan.html, body data-p="elan"). Leeg embedUrl toont "Video volgt" in de speler; onbekend id toont "Niet gevonden". filmEmbedUrl bestaat niet meer.
+- Der Übermensch en Perpetuum worden NIET getoond.
 - Placeholders zijn gemarkeerd met de klasse `.todo` (gestippelde rand).
 
 ## Nog open
 - Beeld voor hero en tegels; stills/synopsis/credits van Élan; Instagram- en andere sociale links (config.js)
-- Volledige portfoliolijst (hij heeft meer werk dan Élan, Der Übermensch, Perpetuum)
+- Portfolio invullen: stills, embedUrls en rol per werk (config.js → portfolio); Élan heeft nog geen embedUrl en staat dus ook op "binnenkort"
 - Tagline, Over-tekst in zijn eigen woorden, definitieve domeinnaam (bene.be? check beschikbaarheid + BOIP-merkcontrole; eigen naam in footer houden)
 - Meerdere kleine projecten kunnen later een eigen pagina krijgen (kopieer elan.html)
 

@@ -3,11 +3,20 @@ const CONFIG={
   email:"declercqbenedict@gmail.com",   // vervang door je zakelijke adres
   heroMedia:"",                         // leeg = zwart. Of een visual achter het logo: foto (.jpg/.webp) of korte loop (.mp4/.webm), bv. "media/hero.mp4"
   tiles:{portfolio:"media/elan-still-trein-scherper-v1.jpg",diensten:"media/diensten-still-v2.jpg",over:"media/over-still.jpg",contact:"media/contact-icoon-envolop-V2.jpg"},  // beeld per tegel op de homepagina, bv. "media/tile-portfolio.jpg"
-  projects:[                           // portfolio: één regel per project (bovenaan = eerst). img = beeld 16:9 (bv. 1600×900), url leeg = "binnenkort"
-    {title:"Élan",           type:"Kortfilm",                        img:"media/elan-still-trein-scherper-v1.jpg", url:"elan.html"},
-    {title:"Der Übermensch", type:"Documentaire · motion graphics",  img:"", url:""},
-    {title:"Perpetuum",      type:"Compositie · piano",              img:"", url:""}
+  // Portfolio: groepen in deze volgorde, daarna alle werken.
+  // Per werk: id (kort, zonder spaties), titel, groep, still (beeld 16:9 in media/, bv. 1600×900),
+  // embedUrl (bv. "https://player.vimeo.com/video/XXXX"; leeg = "binnenkort", niet klikbaar), rol (één korte regel).
+  // pagina: alleen invullen als het werk een eigen pagina heeft (Élan); anders gaat de link naar project.html?p=<id>.
+  groepen:["Film","Commercieel","Documentair","Animatie"],
+  portfolio:[
+    {id:"elan",        titel:"Élan",                groep:"Film",        still:"media/elan-still-trein-scherper-v1.jpg", embedUrl:"", rol:"", pagina:"elan.html"},
+    {id:"chase",       titel:"Chase scene",         groep:"Film",        still:"", embedUrl:"", rol:""},
+    {id:"reclamespot", titel:"Reclamespot",         groep:"Commercieel", still:"", embedUrl:"", rol:""},
+    {id:"aftermovie",  titel:"Aftermovie",          groep:"Commercieel", still:"", embedUrl:"", rol:""},
+    {id:"reportage",   titel:"Reportage",           groep:"Commercieel", still:"", embedUrl:"", rol:""},
+    {id:"portret",     titel:"Documentair portret", groep:"Documentair", still:"", embedUrl:"", rol:""},
+    {id:"3d",          titel:"3D-animatie",         groep:"Animatie",    still:"", embedUrl:"", rol:""},
+    {id:"motion",      titel:"2D motion graphics",  groep:"Animatie",    still:"", embedUrl:"", rol:""}
   ],
-  filmEmbedUrl:"",                      // bv. "https://player.vimeo.com/video/XXXX"
   social:[{label:"Instagram",url:""},{label:"Vimeo",url:""}]   // later uitbreiden
 };
