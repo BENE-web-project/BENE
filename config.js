@@ -10,7 +10,7 @@ const CONFIG={
   groepen:["Film","Commercieel","Documentair","Animatie"],
   portfolio:[
     {id:"elan",        titel:"Élan",                groep:"Film",        still:"media/elan-still-trein-scherper-v1.jpg", embedUrl:"https://youtu.be/WVd7dfdBHQI", rol:"", pagina:"elan.html"},
-    {id:"chase",       titel:"Chase scene",         groep:"Film",        still:"", embedUrl:"", rol:""},
+    {id:"chase",       titel:"Chase scene",         groep:"Film",        still:"media/chase-still.webp", embedUrl:"https://youtu.be/ECrBQ3xFojo", rol:""},
     {id:"reclamespot", titel:"Reclamespot",         groep:"Commercieel", still:"", embedUrl:"", rol:""},
     {id:"aftermovie",  titel:"Aftermovie",          groep:"Commercieel", still:"", embedUrl:"", rol:""},
     {id:"reportage",   titel:"Reportage",           groep:"Commercieel", still:"", embedUrl:"", rol:""},
