@@ -42,7 +42,7 @@ footer a{text-decoration:none}footer a:hover{color:var(--fg)}
 .hint{font-family:var(--mono);font-size:.72rem;color:var(--mute);margin-top:10px}
 @media(max-width:700px){.hero{min-height:72svh}.tag{font-size:.75rem;letter-spacing:.1em}}
 
-/* tegels: alle vier schermvullend onder elkaar; elk vloeit vanuit het zwart in zijn beeld */
+/* tegels: portfolio schermvullend (vloeit vanuit het zwart in het beeld); de andere drie kleiner eronder */
 .tiles{display:block}
 .tile{position:relative;display:block;width:100%;aspect-ratio:2048/858;min-height:60svh;max-height:92svh;overflow:hidden;text-decoration:none}
 .tile .vis{position:absolute;inset:0;background:center/cover no-repeat;transition:transform .8s ease;opacity:.85}
@@ -61,7 +61,15 @@ footer a{text-decoration:none}footer a:hover{color:var(--fg)}
   .tile .vis{animation:reveal linear both;animation-timeline:view();animation-range:entry 0% cover 45%}
   @keyframes reveal{from{filter:brightness(.25)}to{filter:brightness(1)}}
 }
-@media(max-width:700px){.tile{aspect-ratio:auto;min-height:0;height:75svh}}
+/* kleine tegels: drie naast elkaar binnen de marges, tekst onder het beeld */
+.tiles-row{max-width:var(--max);margin:0 auto;padding:clamp(48px,7vw,96px) var(--g);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,32px)}
+.tile.small{aspect-ratio:auto;min-height:0;max-height:none;overflow:visible}
+.tile.small::before{content:none}
+.tile.small .vis{position:relative;inset:auto;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--line)}
+.tile.small .cap{position:static;background:none;padding:16px 0 0}
+.tile.small .n{padding-top:.5em}
+.tile.small .t{font-size:clamp(1.4rem,2.4vw,2rem)}
+@media(max-width:700px){.tile{aspect-ratio:auto;min-height:0;height:75svh}.tile.small{height:auto}.tiles-row{grid-template-columns:1fr;gap:40px}}
 @media(prefers-reduced-motion:reduce){.tile .vis,.tile .cap::after{transition:none;animation:none}}
 
 /* ---------- pagina's ---------- */
