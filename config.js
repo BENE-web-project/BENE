@@ -5,11 +5,11 @@ const CONFIG={
   tiles:{portfolio:"media/elan-still-trein-scherper-v1.jpg",diensten:"media/diensten-still-v2.jpg",over:"media/over-still.jpg",contact:"media/contact-icoon-envolop-V2.jpg"},  // beeld per tegel op de homepagina, bv. "media/tile-portfolio.jpg"
   // Portfolio: groepen in deze volgorde, daarna alle werken.
   // Per werk: id (kort, zonder spaties), titel, groep, still (beeld 16:9 in media/, bv. 1600×900),
-  // embedUrl (bv. "https://player.vimeo.com/video/XXXX"; leeg = "binnenkort", niet klikbaar), rol (één korte regel).
+  // embedUrl (gewone YouTube- of Vimeo-link mag, bv. "https://youtu.be/XXXX"; leeg = "binnenkort", niet klikbaar), rol (één korte regel).
   // pagina: alleen invullen als het werk een eigen pagina heeft (Élan); anders gaat de link naar project.html?p=<id>.
   groepen:["Film","Commercieel","Documentair","Animatie"],
   portfolio:[
-    {id:"elan",        titel:"Élan",                groep:"Film",        still:"media/elan-still-trein-scherper-v1.jpg", embedUrl:"", rol:"", pagina:"elan.html"},
+    {id:"elan",        titel:"Élan",                groep:"Film",        still:"media/elan-still-trein-scherper-v1.jpg", embedUrl:"https://youtu.be/WVd7dfdBHQI", rol:"", pagina:"elan.html"},
     {id:"chase",       titel:"Chase scene",         groep:"Film",        still:"", embedUrl:"", rol:""},
     {id:"reclamespot", titel:"Reclamespot",         groep:"Commercieel", still:"", embedUrl:"", rol:""},
     {id:"aftermovie",  titel:"Aftermovie",          groep:"Commercieel", still:"", embedUrl:"", rol:""},
