@@ -14,11 +14,11 @@ if(fp)fp.onclick=()=>{
   if(Sound.on)Sound.toggle().then(soundUI);
 };
 
-/* Homepagina: grote visual achter het logo + beeld per tegel (leeg = streepjes-placeholder) */
+/* Homepagina: visual achter het logo (leeg = zwart) + beeld per tegel (leeg = streepjes-placeholder) */
 const hm=document.getElementById('heroMedia');
 if(hm){
   const u=CONFIG.heroMedia;
-  if(!u){hm.classList.add('empty');hm.innerHTML='<span class="todo">hero-visual: zie config.js</span>'}
+  if(!u){/* leeg = gewoon zwart */}
   else if(/\.(mp4|webm)$/i.test(u))hm.innerHTML=`<video src="${u}" autoplay muted loop playsinline></video>`;
   else hm.style.backgroundImage=`url("${u}")`;
 }

@@ -14,7 +14,8 @@ Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games)
 - Menu: Home, Portfolio, Diensten, Over, Contact (+ geluidsknop). Echte aparte pagina's, geen ankerlinks. "Werk" heet "Portfolio".
 - Home: logo-canvas in 5 horizontale lijnen. Bewegingen bewust ZACHT (hij werd er misselijk van): kleine uitslag, trage veer. Elke lijn = één toon (G mineur-drieklank: G, B♭, D, G, B♭).
 - Geluid is altijd opt-in via de knop, nooit automatisch. Tonen zacht en rond (sine, lange uitloop, begrensd tempo). prefers-reduced-motion respecteren.
-- Home heeft een grote visual achter het logo (config.js: heroMedia) en vier beeldtegels (config.js: tiles). Nu nog streepjes-placeholders.
+- Home: hero achter het logo is ZWART (heroMedia leeg). Daaronder vloeit een gradient van zwart in de tegels. Portfoliotegel = volle breedte met media/elan-still-trein.jpg (webversie van media/Élan-still-trein.png); Diensten/Over/Contact staan eronder in drie kolommen, nog streepjes-placeholders. Beelden lichten zacht op bij het scrollen.
+- Beelden: zet ze in media/ en gebruik een webversie (JPG ±2000px breed, <300 KB); bestandsnamen liefst zonder accenten.
 - Tagline "Video · Foto · Geluid & muziek" is voorlopig; hij is er niet van overtuigd.
 - A/B-geluid (ruw vs sounddesign) is geschrapt (te moeilijk).
 - Placeholders zijn gemarkeerd met de klasse `.todo` (gestippelde rand).
