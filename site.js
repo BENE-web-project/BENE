@@ -19,14 +19,6 @@ function embedSrc(u){
   if(m)return`https://player.vimeo.com/video/${m[1]}?autoplay=1`;
   return u+(u.includes('?')?'&':'?')+'autoplay=1';
 }
-/* Geen eigen still maar wel een YouTube-link? Dan de thumbnail van YouTube (hoogste kwaliteit die bestaat). */
-function ytThumb(el,w){
-  const id=!w.still&&ytId(w.embedUrl);if(!id)return;
-  const img=new Image(),hq=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-  img.onload=()=>{const u=img.naturalWidth>120?img.src:hq;el.style.backgroundImage=`url("${u}")`;el.classList.remove('empty','todo');el.textContent=''};
-  img.onerror=()=>{el.style.backgroundImage=`url("${hq}")`;el.classList.remove('empty','todo');el.textContent=''};
-  img.src=`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-}
 const iframeHTML=w=>`<iframe src="${embedSrc(w.embedUrl)}" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen title="${w.titel}"></iframe>`;
 function soundOff(){if(Sound.on)Sound.toggle().then(soundUI)}
 
@@ -57,7 +49,7 @@ if(wp){
     wp.querySelector('#wTitel').textContent=w.titel;
     wp.querySelector('#wRol').innerHTML=rolHTML(w);
     const st=wp.querySelector('#wStill');
-    if(w.still)st.style.backgroundImage=`url("${w.still}")`;else{st.classList.add('todo');st.textContent='still';ytThumb(st,w)}
+    if(w.still)st.style.backgroundImage=`url("${w.still}")`;else{st.classList.add('todo');st.textContent='still'}
   }
 }
 
@@ -92,7 +84,6 @@ if(pj)pj.innerHTML=(CONFIG.groepen||[]).map(g=>{
     return w.embedUrl?`<a class="project" href="${werkLink(w)}" data-id="${w.id}" aria-label="Speel ${w.titel} af">${vis}${txt}</a>`:`<div class="project soon">${vis}${txt}</div>`;
   }).join('')}</div></section>`;
 }).join('');
-if(pj)pj.querySelectorAll('a.project').forEach(a=>ytThumb(a.querySelector('.vis'),werk(a.dataset.id)));
 /* Klik op een werk = video als laag; ctrl/cmd-klik of middelklik opent nog steeds de projectpagina */
 if(pj)pj.addEventListener('click',e=>{
   const a=e.target.closest('a.project');
