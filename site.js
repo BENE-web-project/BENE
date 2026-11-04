@@ -27,6 +27,14 @@ document.querySelectorAll('.tile').forEach(t=>{
   if(u)v.style.backgroundImage=`url("${u}")`;else v.classList.add('empty');
 });
 
+/* Portfolio: projectkaarten uit CONFIG.projects */
+const pj=document.getElementById('projects');
+if(pj)pj.innerHTML=(CONFIG.projects||[]).map(p=>{
+  const vis=`<div class="vis${p.img?'':' empty'}"${p.img?` style="background-image:url('${p.img}')"`:''}></div>`;
+  const txt=`<div class="cap"><span class="t">${p.title}</span><span class="d">${p.type||''}</span>${p.url?'<span class="a">→</span>':'<span class="a soon">binnenkort</span>'}</div>`;
+  return p.url?`<a class="project" href="${p.url}">${vis}${txt}</a>`:`<div class="project soon">${vis}${txt}</div>`;
+}).join('');
+
 /* Geluid: opt-in. Vijf tonen = G mineur-drieklank (G, B♭, D, G, B♭), één per lijn van het logo. */
 const Sound=(()=>{
   const NOTES=[196,233.08,293.66,392,466.16];
@@ -55,4 +63,4 @@ const Sound=(()=>{
 })();
 function soundUI(){const b=document.getElementById('sound');b.setAttribute('aria-pressed',Sound.on);b.textContent='geluid: '+(Sound.on?'aan':'uit')}
 document.getElementById('sound').onclick=async()=>{await Sound.toggle();soundUI();if(Sound.on)Sound.pluck(0)};
-document.querySelectorAll('nav a,a.row').forEach((el,k)=>el.addEventListener('mouseenter',()=>Sound.pluck(k)));
+document.querySelectorAll('nav a,a.row,a.project').forEach((el,k)=>el.addEventListener('mouseenter',()=>Sound.pluck(k)));
