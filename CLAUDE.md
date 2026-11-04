@@ -27,7 +27,7 @@ Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games)
 
 ## Nog open
 - Beeld voor hero en tegels; stills/synopsis/credits van Élan; Instagram- en andere sociale links (config.js)
-- Portfolio invullen: stills, embedUrls en rol per werk (config.js → portfolio); Élan en Chase scene hebben al still + YouTube-link
+- Portfolio invullen: stills, embedUrls en rol per werk (config.js → portfolio); Élan, Chase scene, Reclamespot en Aftermovie hebben al still + YouTube-link; Reportage is tijdelijk verborgen (uitgecommentarieerd in config.js)
 - Tagline, Over-tekst in zijn eigen woorden, definitieve domeinnaam (bene.be? check beschikbaarheid + BOIP-merkcontrole; eigen naam in footer houden)
 - Meerdere kleine projecten kunnen later een eigen pagina krijgen (kopieer elan.html)
 
