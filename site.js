@@ -1,4 +1,4 @@
-/* gedeeld: footerjaar, contact, film-embed, geluid */
+/* gedeeld: footerjaar, contact, werken (portfolio + projectpagina), home-beelden, geluid */
 document.getElementById('yr').textContent=new Date().getFullYear();
 const mail=document.getElementById('mail');
 if(mail){mail.textContent=CONFIG.email;mail.href='mailto:'+CONFIG.email}
@@ -6,13 +6,36 @@ document.querySelectorAll('.mailto').forEach(a=>a.href='mailto:'+CONFIG.email);
 const soc=document.getElementById('social');
 if(soc)soc.innerHTML=CONFIG.social.map(s=>s.url?`<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`:`<span class="todo">${s.label} — link invullen in config.js</span>`).join('');
 
+/* Werken: één lijst in config.js. Projectpagina = project.html?p=<id> (Élan: elan.html, body data-p="elan") */
+const werk=id=>(CONFIG.portfolio||[]).find(w=>w.id===id);
+const werkLink=w=>w.pagina||'project.html?p='+encodeURIComponent(w.id);
+const rolHTML=w=>w.rol?w.rol:'<span class="todo">Mijn rol — in te vullen in config.js</span>';
+
+const wp=document.getElementById('work');
+if(wp){
+  const w=werk(new URLSearchParams(location.search).get('p'));
+  if(!w){document.title='Niet gevonden — BENE';wp.innerHTML='<p class="label"><a href="portfolio.html">← Portfolio</a></p><h1>Niet gevonden</h1><p class="lead">Dit werk bestaat niet (meer).</p>'}
+  else{
+    document.title=w.titel+' — BENE';
+    document.body.dataset.p=w.id;
+    wp.querySelector('#wGroep').textContent=w.groep;
+    wp.querySelector('#wTitel').textContent=w.titel;
+    wp.querySelector('#wRol').innerHTML=rolHTML(w);
+    const st=wp.querySelector('#wStill');
+    if(w.still)st.style.backgroundImage=`url("${w.still}")`;else{st.classList.add('todo');st.textContent='still'}
+  }
+}
+
 const fp=document.getElementById('filmPlay');
-if(fp)fp.onclick=()=>{
-  if(!CONFIG.filmEmbedUrl){fp.insertAdjacentHTML('afterend','<span class="todo" style="position:absolute;bottom:14px;font-size:.8rem">film nog niet gekoppeld (config.js)</span>');return}
-  const sep=CONFIG.filmEmbedUrl.includes('?')?'&':'?';
-  document.getElementById('frame').innerHTML=`<iframe src="${CONFIG.filmEmbedUrl}${sep}autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-  if(Sound.on)Sound.toggle().then(soundUI);
-};
+if(fp){
+  const w=werk(document.body.dataset.p),url=w&&w.embedUrl;
+  if(!url)fp.outerHTML='<span class="todo">Video volgt</span>';
+  else fp.onclick=()=>{
+    const sep=url.includes('?')?'&':'?';
+    document.getElementById('frame').innerHTML=`<iframe src="${url}${sep}autoplay=1" allow="autoplay; fullscreen" allowfullscreen title="${w.titel}"></iframe>`;
+    if(Sound.on)Sound.toggle().then(soundUI);
+  };
+}
 
 /* Homepagina: visual achter het logo (leeg = zwart) + beeld per tegel (leeg = streepjes-placeholder) */
 const hm=document.getElementById('heroMedia');
@@ -27,12 +50,16 @@ document.querySelectorAll('.tile').forEach(t=>{
   if(u)v.style.backgroundImage=`url("${u}")`;else v.classList.add('empty');
 });
 
-/* Portfolio: projectkaarten uit CONFIG.projects */
+/* Portfolio: werken per groep. Alleen werken met embedUrl zijn klikbaar. */
 const pj=document.getElementById('projects');
-if(pj)pj.innerHTML=(CONFIG.projects||[]).map(p=>{
-  const vis=`<div class="vis${p.img?'':' empty'}"${p.img?` style="background-image:url('${p.img}')"`:''}></div>`;
-  const txt=`<div class="cap"><span class="t">${p.title}</span><span class="d">${p.type||''}</span>${p.url?'<span class="a">→</span>':'<span class="a soon">binnenkort</span>'}</div>`;
-  return p.url?`<a class="project" href="${p.url}">${vis}${txt}</a>`:`<div class="project soon">${vis}${txt}</div>`;
+if(pj)pj.innerHTML=(CONFIG.groepen||[]).map(g=>{
+  const ws=(CONFIG.portfolio||[]).filter(w=>w.groep===g);
+  if(!ws.length)return'';
+  return`<section class="group"><h2 class="group-h">${g}</h2><div class="projects">${ws.map(w=>{
+    const vis=`<div class="vis${w.still?'':' empty'}"${w.still?` style="background-image:url('${w.still}')"`:''}></div>`;
+    const txt=`<div class="cap"><span class="t">${w.titel}</span><span class="d">${rolHTML(w)}</span>${w.embedUrl?'<span class="a">→</span>':'<span class="a soon">binnenkort</span>'}</div>`;
+    return w.embedUrl?`<a class="project" href="${werkLink(w)}">${vis}${txt}</a>`:`<div class="project soon">${vis}${txt}</div>`;
+  }).join('')}</div></section>`;
 }).join('');
 
 /* Geluid: opt-in. Vijf tonen = G mineur-drieklank (G, B♭, D, G, B♭), één per lijn van het logo. */
