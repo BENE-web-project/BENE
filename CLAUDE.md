@@ -21,13 +21,13 @@ Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games)
 - Geen nummers (01, 02…) bij klikbare titels (home-tegels, portfolio). Diensten-lijst heeft ze nog.
 - Portfolio = werken gegroepeerd op soort, in de volgorde van config.js → groepen: Film, Commercieel, Documentair, Animatie. Per groep een monospace-kop met dunne lijn, daaronder kaarten (still 16:9 + titel + één regel rol).
 - Werken staan in config.js → portfolio: {id, titel, groep, still, embedUrl, rol, pagina?}. Werk toevoegen = regel toevoegen. still leeg = streepjes; rol leeg = .todo-placeholder.
-- Embed-systeem: alleen werken met een ingevuld embedUrl zijn klikbaar (anders "binnenkort"). De link gaat naar project.html?p=<id> (grote speler met iframe, still, rol), of naar `pagina` als die is ingevuld (Élan → elan.html, body data-p="elan"). Leeg embedUrl toont "Video volgt" in de speler; onbekend id toont "Niet gevonden". filmEmbedUrl bestaat niet meer.
+- Embed-systeem: alleen werken met een ingevuld embedUrl zijn klikbaar (anders "binnenkort"). embedUrl mag een gewone YouTube-/Vimeo-link zijn (youtu.be/…); site.js zet die om (YouTube via youtube-nocookie). In het portfolio toont hover een playknop en opent een klik de video als laag bovenop de pagina (<dialog>; sluiten met knop, Esc of klik ernaast; video stopt bij sluiten). Ctrl/cmd-klik opent de projectpagina: project.html?p=<id> (grote speler met iframe, still, rol), of `pagina` als die is ingevuld (Élan → elan.html, body data-p="elan"). Leeg embedUrl toont "Video volgt" in de speler; onbekend id toont "Niet gevonden". filmEmbedUrl bestaat niet meer.
 - Der Übermensch en Perpetuum worden NIET getoond.
 - Placeholders zijn gemarkeerd met de klasse `.todo` (gestippelde rand).
 
 ## Nog open
 - Beeld voor hero en tegels; stills/synopsis/credits van Élan; Instagram- en andere sociale links (config.js)
-- Portfolio invullen: stills, embedUrls en rol per werk (config.js → portfolio); Élan heeft nog geen embedUrl en staat dus ook op "binnenkort"
+- Portfolio invullen: stills, embedUrls en rol per werk (config.js → portfolio); Élan heeft zijn YouTube-link (test voor de andere video's)
 - Tagline, Over-tekst in zijn eigen woorden, definitieve domeinnaam (bene.be? check beschikbaarheid + BOIP-merkcontrole; eigen naam in footer houden)
 - Meerdere kleine projecten kunnen later een eigen pagina krijgen (kopieer elan.html)
 
