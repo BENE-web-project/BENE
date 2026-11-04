@@ -4,7 +4,7 @@ Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games)
 
 ## Structuur
 - index.html (home), portfolio.html, elan.html (projectpagina), diensten.html, over.html, contact.html, 404.html
-- style.css (alle stijl), site.js (gedeeld: footer, contact, filmembed, geluid), hero.js (logo-canvas op home), config.js (e-mail, filmEmbedUrl, heroMedia, tiles, social)
+- style.css (alle stijl), site.js (gedeeld: footer, contact, filmembed, geluid), hero.js (logo-canvas op home), config.js (e-mail, heroMedia, tiles, projects, filmEmbedUrl, social)
 - logo.png = uitsnede van zijn logo (witte horizontale lijnen op transparant). Liefst later vervangen door SVG/hogere resolutie.
 - Pagina's zijn handgeschreven; header/footer staan in elk bestand identiek (geluidsknop staat naast <nav>, niet erin). Wijzig je het menu, wijzig het overal.
 - favicon.svg = vier witte lijnen op zwart. Layout: één zijmarge --g en max-breedte --max in style.css; header, inhoud en footer lijnen daarop uit.
@@ -18,6 +18,8 @@ Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games)
 - Beelden: zet ze in media/ en gebruik een webversie (JPG ±2000px breed, <300 KB); bestandsnamen liefst zonder accenten.
 - Tagline "Video · Foto · Geluid & muziek" is voorlopig; hij is er niet van overtuigd.
 - A/B-geluid (ruw vs sounddesign) is geschrapt (te moeilijk).
+- Geen nummers (01, 02…) bij klikbare titels (home-tegels, portfolio). Diensten-lijst heeft ze nog.
+- Portfolio = raster van projectkaarten (beeld 16:9 + titel + type), opgebouwd uit config.js → projects. Project toevoegen = regel toevoegen; url leeg = "binnenkort", img leeg = streepjes.
 - Placeholders zijn gemarkeerd met de klasse `.todo` (gestippelde rand).
 
 ## Nog open
