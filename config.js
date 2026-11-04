@@ -11,9 +11,10 @@ const CONFIG={
   portfolio:[
     {id:"elan",        titel:"Élan",                groep:"Film",        still:"media/elan-still-trein-scherper-v1.jpg", embedUrl:"https://youtu.be/WVd7dfdBHQI", rol:"", pagina:"elan.html"},
     {id:"chase",       titel:"Chase scene",         groep:"Film",        still:"media/chase-still.webp", embedUrl:"https://youtu.be/ECrBQ3xFojo", rol:""},
-    {id:"reclamespot", titel:"Reclamespot",         groep:"Commercieel", still:"", embedUrl:"", rol:""},
-    {id:"aftermovie",  titel:"Aftermovie",          groep:"Commercieel", still:"", embedUrl:"", rol:""},
-    {id:"reportage",   titel:"Reportage",           groep:"Commercieel", still:"", embedUrl:"", rol:""},
+    {id:"reclamespot", titel:"Reclamespot",         groep:"Commercieel", still:"media/reclamespot-thumbnail-still.webp", embedUrl:"https://youtu.be/aJWCYGtsVOg", rol:""},
+    {id:"aftermovie",  titel:"Aftermovie",          groep:"Commercieel", still:"media/aftermovie-thumbnail-still.png", embedUrl:"https://youtu.be/ZxqHVHTUEAI", rol:""},
+    // tijdelijk verborgen (// weghalen om terug te tonen):
+    // {id:"reportage",   titel:"Reportage",           groep:"Commercieel", still:"", embedUrl:"", rol:""},
     {id:"portret",     titel:"Documentair portret", groep:"Documentair", still:"", embedUrl:"", rol:""},
     {id:"3d",          titel:"3D-animatie",         groep:"Animatie",    still:"", embedUrl:"", rol:""},
     {id:"motion",      titel:"2D motion graphics",  groep:"Animatie",    still:"", embedUrl:"", rol:""}
