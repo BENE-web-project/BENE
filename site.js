@@ -101,7 +101,7 @@ if(pj)pj.addEventListener('click',e=>{
    elke lijn heeft zijn eigen rustpauze, dus snel over alle lijnen vegen geeft het volledige akkoord. */
 const Sound=(()=>{
   const NOTES=[196,233.08,293.66,392,466.16];
-  let ctx,master,verb,on=false,built=false,voices=0;const last={};
+  let ctx,master,verb,padWave,on=false,built=false,voices=0;const last={};
   const INSTR={
     // zachte sinus-tokkel: grondtoon + stille octaaf, korte aanzet, 3 s uitklank
     sinus:{verb:.3,play(f,t){
@@ -111,16 +111,15 @@ const Sound=(()=>{
         o.connect(g).connect(master);o.start(t);o.stop(t+3.1);voice(o);
       });
     }},
-    // zachte pad: twee licht ontstemde zaagtanden + sinus, door een filter dat traag opengaat; trage aanzet, 4 s uitklank
+    // zachte pad: twee licht ontstemde oscillatoren met een vooraf berekende, zachte golfvorm (warm, zonder filter = licht om te berekenen);
+    // trage aanzet, ±4 s uitklank
     pad:{verb:.45,play(f,t){
-      const flt=ctx.createBiquadFilter(),g=ctx.createGain(),end=t+4.2;
-      flt.type='lowpass';flt.Q.value=.5;
-      flt.frequency.setValueAtTime(350,t);flt.frequency.linearRampToValueAtTime(1300,t+.6);flt.frequency.exponentialRampToValueAtTime(500,end);
-      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.09,t+.45);g.gain.setTargetAtTime(0,t+.9,1);
-      flt.connect(g).connect(master);
-      [['sawtooth',-7,.35],['sawtooth',7,.35],['sine',0,.6]].forEach(([type,cents,a])=>{
-        const o=ctx.createOscillator(),og=ctx.createGain();o.type=type;o.frequency.value=f;o.detune.value=cents;og.gain.value=a;
-        o.connect(og).connect(flt);o.start(t);o.stop(end);voice(o);
+      const g=ctx.createGain(),end=t+4;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.11,t+.45);g.gain.setTargetAtTime(0,t+.8,.8);
+      g.connect(master);
+      [-6,6].forEach(cents=>{
+        const o=ctx.createOscillator();o.setPeriodicWave(padWave);o.frequency.value=f;o.detune.value=cents;
+        o.connect(g);o.start(t);o.stop(end);voice(o);
       });
     }}
   };
@@ -129,9 +128,12 @@ const Sound=(()=>{
   function build(){
     ctx=new (window.AudioContext||window.webkitAudioContext)();
     master=ctx.createGain();master.gain.value=.4;
+    // golfvorm voor de pad: boventonen die snel zachter worden (klinkt als een gefilterde zaagtand)
+    const H=10,re=new Float32Array(H+1),im=new Float32Array(H+1);for(let n=1;n<=H;n++)im[n]=Math.exp(-n/2.2)/n;
+    padWave=ctx.createPeriodicWave(re,im);
     const lim=ctx.createDynamicsCompressor();   // vangt luide akkoorden op
     lim.threshold.value=-18;lim.knee.value=12;lim.ratio.value=4;lim.attack.value=.01;lim.release.value=.3;
-    const conv=ctx.createConvolver(),len=ctx.sampleRate*2.2,buf=ctx.createBuffer(2,len,ctx.sampleRate);
+    const conv=ctx.createConvolver(),len=Math.round(ctx.sampleRate*1.8),buf=ctx.createBuffer(2,len,ctx.sampleRate);
     for(let c=0;c<2;c++){const d=buf.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3)}
     conv.buffer=buf;verb=ctx.createGain();verb.gain.value=instr().verb;
     master.connect(lim);master.connect(conv);conv.connect(verb);verb.connect(lim);lim.connect(ctx.destination);
@@ -140,7 +142,7 @@ const Sound=(()=>{
   function pluck(i){
     if(!on||!built)return;
     const n=(i==null?Math.floor(Math.random()*NOTES.length):i)%NOTES.length,t=ctx.currentTime;
-    if(t-(last[n]??-9)<.3||voices>120)return;   // per toon begrensd tempo + veiligheidsgrens (±40 tonen tegelijk)
+    if(t-(last[n]??-9)<.3||voices>40)return;   // per toon begrensd tempo + veiligheidsgrens (±20 tonen tegelijk)
     last[n]=t;instr().play(NOTES[n],t);
   }
   async function toggle(){if(!built)build();if(ctx.state==='suspended')await ctx.resume();on=!on;return on}
