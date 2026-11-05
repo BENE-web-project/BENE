@@ -12,7 +12,7 @@
     c.clearRect(0,0,W,H);const sh=img.height/N,dh=lh/N;
     for(let i=0;i<N;i++)c.drawImage(img,0,i*sh,img.width,sh,pad+off[i],pad/2+i*dh,lw,dh);
   }
-  function kick(i,dir,silent){vel[i]=(dir||(Math.random()<.5?-1:1))*Math.max(5,W*.009);if(!silent)Sound.pluck(i);if(reduce)return;loop()}
+  function kick(i,dir,silent){vel[i]=(dir||(Math.random()<.5?-1:1))*Math.max(5,W*.009);if(!silent)Sound.strike(i);if(reduce)return;loop()}
   let running=false;
   function loop(){if(running)return;running=true;requestAnimationFrame(step)}
   function step(){
