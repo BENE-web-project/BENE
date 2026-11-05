@@ -101,7 +101,7 @@ if(pj)pj.addEventListener('click',e=>{
    elke lijn heeft zijn eigen rustpauze, dus snel over alle lijnen vegen geeft het volledige akkoord. */
 const Sound=(()=>{
   const NOTES=[196,233.08,293.66,392,466.16];
-  let ctx,master,verb,padWave,on=false,built=false,voices=0;const last={};
+  let ctx,master,verb,padWave,strWave,vib,on=false,built=false,voices=0;const last={};
   const INSTR={
     // zachte sinus-tokkel: grondtoon + stille octaaf, korte aanzet, 3 s uitklank
     sinus:{verb:.3,play(f,t){
@@ -122,6 +122,18 @@ const Sound=(()=>{
         o.connect(g);o.start(t);o.stop(end);voice(o);
       });
     }}
+,
+    // strijkers: rijkere golfvorm (meer boventonen), twee ontstemde stemmen als klein ensemble, licht vibrato
+    // (één gedeelde vibrato-oscillator voor alle tonen = licht), trage aanzet, ±4,5 s uitklank
+    strijkers:{verb:.5,play(f,t){
+      const g=ctx.createGain(),end=t+4.5;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.7);g.gain.setTargetAtTime(0,t+1.2,.9);
+      g.connect(master);
+      [-8,8].forEach(cents=>{
+        const o=ctx.createOscillator();o.setPeriodicWave(strWave);o.frequency.value=f;o.detune.value=cents;
+        vib.connect(o.detune);o.connect(g);o.start(t);o.stop(end);voice(o);
+      });
+    }}
   };
   const instr=()=>INSTR[(typeof CONFIG!=='undefined'&&CONFIG.instrument)]||INSTR.pad;
   function voice(o){voices++;o.onended=()=>voices--}
@@ -131,6 +143,11 @@ const Sound=(()=>{
     // golfvorm voor de pad: boventonen die snel zachter worden (klinkt als een gefilterde zaagtand)
     const H=10,re=new Float32Array(H+1),im=new Float32Array(H+1);for(let n=1;n<=H;n++)im[n]=Math.exp(-n/2.2)/n;
     padWave=ctx.createPeriodicWave(re,im);
+    // golfvorm voor strijkers: meer boventonen (zaagtand-achtig, strijkstok), zacht afgerond
+    const S=16,re2=new Float32Array(S+1),im2=new Float32Array(S+1);for(let n=1;n<=S;n++)im2[n]=Math.exp(-n/5)/n;
+    strWave=ctx.createPeriodicWave(re2,im2);
+    // gedeeld vibrato: 5 Hz, ±6 cent
+    const lfo=ctx.createOscillator();vib=ctx.createGain();lfo.frequency.value=5;vib.gain.value=6;lfo.connect(vib);lfo.start();
     const lim=ctx.createDynamicsCompressor();   // vangt luide akkoorden op
     lim.threshold.value=-18;lim.knee.value=12;lim.ratio.value=4;lim.attack.value=.01;lim.release.value=.3;
     const conv=ctx.createConvolver(),len=Math.round(ctx.sampleRate*1.8),buf=ctx.createBuffer(2,len,ctx.sampleRate);

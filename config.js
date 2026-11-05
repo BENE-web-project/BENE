@@ -1,7 +1,7 @@
 // Pas hier je gegevens aan.
 const CONFIG={
   email:"bndctdc@gmail.com",
-  instrument:"pad",                     // klank van het logo: "pad" (zacht, aanzwellend) of "sinus" (korte zachte tokkel)
+  instrument:"strijkers",               // klank van het logo: "strijkers", "pad" (zacht, aanzwellend) of "sinus" (korte zachte tokkel)
   heroMedia:"",                         // leeg = zwart. Of een visual achter het logo: foto (.jpg/.webp) of korte loop (.mp4/.webm), bv. "media/hero.mp4"
   tiles:{portfolio:"media/elan-still-trein-scherper-v1.jpg",diensten:"media/diensten-still-v2.jpg",over:"media/over-still.jpg",contact:"media/contact-icoon-envolop-V2.jpg"},  // beeld per tegel op de homepagina, bv. "media/tile-portfolio.jpg"
   // Portfolio: groepen in deze volgorde, daarna alle werken.
