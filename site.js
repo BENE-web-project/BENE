@@ -2,14 +2,18 @@
 document.getElementById('yr').textContent=new Date().getFullYear();
 const mail=document.getElementById('mail');
 if(mail){mail.textContent=CONFIG.email;mail.href='mailto:'+CONFIG.email}
-document.querySelectorAll('.mailto').forEach(a=>a.href='mailto:'+CONFIG.email);
+document.querySelectorAll('.mailto').forEach(a=>{a.href='mailto:'+CONFIG.email;a.textContent=CONFIG.email});
+const ig=(CONFIG.social||[]).find(s=>s.label==='Instagram'&&s.url);
+document.querySelectorAll('.ig').forEach(a=>{if(ig)a.href=ig.url;else a.remove()});
+const por=document.getElementById('portrait');
+if(por&&CONFIG.tiles&&CONFIG.tiles.over)por.style.backgroundImage=`url("${CONFIG.tiles.over}")`;
 const soc=document.getElementById('social');
-if(soc)soc.innerHTML=CONFIG.social.map(s=>s.url?`<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`:`<span class="todo">${s.label} — link invullen in config.js</span>`).join('');
+if(soc)soc.innerHTML=CONFIG.social.map(s=>s.url?`<a href="${s.url}" target="_blank" rel="noopener">${s.label}</a>`:`<span class="todo">${s.label}: link invullen in config.js</span>`).join('');
 
 /* Werken: één lijst in config.js. Projectpagina = project.html?p=<id> (Élan: elan.html, body data-p="elan") */
 const werk=id=>(CONFIG.portfolio||[]).find(w=>w.id===id);
 const werkLink=w=>w.pagina||'project.html?p='+encodeURIComponent(w.id);
-const rolHTML=w=>w.rol?w.rol:'<span class="todo">Mijn rol — in te vullen in config.js</span>';
+const rolHTML=w=>w.rol?w.rol:'<span class="todo">Mijn rol: in te vullen in config.js</span>';
 /* Gewone YouTube-/Vimeo-link -> embed-adres dat meteen afspeelt */
 const ytId=u=>((u||'').match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/)||[])[1];
 function embedSrc(u){
@@ -41,9 +45,9 @@ function openPlayer(w){
 const wp=document.getElementById('work');
 if(wp){
   const w=werk(new URLSearchParams(location.search).get('p'));
-  if(!w){document.title='Niet gevonden — BENE';wp.innerHTML='<p class="label"><a href="portfolio.html">← Portfolio</a></p><h1>Niet gevonden</h1><p class="lead">Dit werk bestaat niet (meer).</p>'}
+  if(!w){document.title='Niet gevonden | BENE';wp.innerHTML='<p class="label"><a href="portfolio.html">← Portfolio</a></p><h1>Niet gevonden</h1><p class="lead">Dit werk bestaat niet (meer).</p>'}
   else{
-    document.title=w.titel+' — BENE';
+    document.title=w.titel+' | BENE';
     document.body.dataset.p=w.id;
     wp.querySelector('#wGroep').textContent=w.groep;
     wp.querySelector('#wTitel').textContent=w.titel;
@@ -118,6 +122,12 @@ const Sound=(()=>{
   async function toggle(){if(!built)build();if(ctx.state==='suspended')await ctx.resume();on=!on;return on}
   return{toggle,pluck,get on(){return on}};
 })();
-function soundUI(){const b=document.getElementById('sound');b.setAttribute('aria-pressed',Sound.on);b.textContent='geluid: '+(Sound.on?'aan':'uit')}
-document.getElementById('sound').onclick=async()=>{await Sound.toggle();soundUI();if(Sound.on)Sound.pluck(0)};
+/* Twee knoppen, één schakelaar: rechtsboven (#sound) en op de homepagina (.soundtoggle) */
+function soundUI(){
+  const b=document.getElementById('sound');b.setAttribute('aria-pressed',Sound.on);b.textContent='geluid: '+(Sound.on?'aan':'uit');
+  document.querySelectorAll('.soundtoggle').forEach(t=>{t.setAttribute('aria-pressed',Sound.on);t.textContent='♪ Geluid '+(Sound.on?'uit':'aan')});
+}
+async function soundClick(){await Sound.toggle();soundUI();if(Sound.on)Sound.pluck(0)}
+document.getElementById('sound').onclick=soundClick;
+document.querySelectorAll('.soundtoggle').forEach(t=>t.onclick=soundClick);
 document.querySelectorAll('nav a,a.row,a.project').forEach((el,k)=>el.addEventListener('mouseenter',()=>Sound.pluck(k)));

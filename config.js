@@ -1,6 +1,6 @@
 // Pas hier je gegevens aan.
 const CONFIG={
-  email:"declercqbenedict@gmail.com",   // vervang door je zakelijke adres
+  email:"bndctdc@gmail.com",
   heroMedia:"",                         // leeg = zwart. Of een visual achter het logo: foto (.jpg/.webp) of korte loop (.mp4/.webm), bv. "media/hero.mp4"
   tiles:{portfolio:"media/elan-still-trein-scherper-v1.jpg",diensten:"media/diensten-still-v2.jpg",over:"media/over-still.jpg",contact:"media/contact-icoon-envolop-V2.jpg"},  // beeld per tegel op de homepagina, bv. "media/tile-portfolio.jpg"
   // Portfolio: groepen in deze volgorde, daarna alle werken.
@@ -19,5 +19,5 @@ const CONFIG={
     {id:"3d",          titel:"3D-animatie",         groep:"Animatie",    still:"media/3D-animatie-thumbnail-still.webp", embedUrl:"https://youtu.be/J-K66dMtLfM", rol:""},
     // {id:"motion",      titel:"2D motion graphics",  groep:"Animatie",    still:"", embedUrl:"", rol:""}
   ],
-  social:[{label:"Instagram",url:""},{label:"Vimeo",url:""}]   // later uitbreiden
+  social:[{label:"Instagram",url:"https://www.instagram.com/bndctdc/"}]   // meer toevoegen: ,{label:"Vimeo",url:"https://vimeo.com/..."}
 };
