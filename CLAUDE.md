@@ -16,7 +16,13 @@ Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games)
 - Geluid is altijd opt-in via de knop, nooit automatisch. Tonen zacht en rond (sine, lange uitloop, begrensd tempo). prefers-reduced-motion respecteren.
 - Home: hero achter het logo is ZWART (heroMedia leeg). Daaronder vloeit een gradient van zwart in de tegels. Portfoliotegel is schermvullend met gradient vanuit zwart. Diensten/Over/Contact staan eronder als drie kleinere tegels (4:3) binnen de marges, tekst onder het beeld (bewust klein: weinig scherp materiaal); op gsm onder elkaar. Portfolio heeft media/elan-still-trein-scherper-v1.jpg (proef; vorige versie media/elan-still-trein.jpg), Diensten media/diensten-still-v2.jpg, Over media/over-still.jpg, Contact media/contact-icoon-envolop-V2.jpg (envelop in logostijl). Kleine tegels: lever beelden aan op 1200×900 (4:3). Uitsnede per tegel via background-position in style.css. Beelden lichten zacht op bij het scrollen.
 - Beelden: zet ze in media/ en gebruik een webversie (JPG of WebP ±2000px breed, <300 KB); bestandsnamen liefst zonder accenten. Lever je al een lichte WebP/JPG aan, dan niet opnieuw comprimeren.
-- Tagline "Video · Foto · Geluid & muziek" is voorlopig; hij is er niet van overtuigd.
+- Tagline: "Video · Muziek · Sound Design" (geen foto). Daaronder de tekstknop "♪ Geluid aan"/"♪ Geluid uit" (.soundtoggle), zelfde schakelaar als #sound rechtsboven (soundUI houdt beide gelijk).
+- Home-tegels: alleen titels, geen ondertitels.
+- Diensten: Video (+ regel: foto's op set/event mogelijk bij videoproject), Geluid (sounddesign en mix, ook los te boeken), Muziek (originele muziek op maat, label "op aanvraag"). Geen aparte Foto-kaart.
+- Over: portret = dezelfde foto als de home-tegel (config.js → tiles.over).
+- GEEN em-dashes (—) in zichtbare tekst, titels of beschrijvingen: hij vindt dat het "AI" verraadt. Gebruik ·, komma of |. Paginatitels: "Pagina | BENE".
+- Footer: "© jaar BENE · Benedict De Clercq" | "Gent · e-mailadres · Instagram" (e-mail en Instagram uit config.js).
+- Contact: bndctdc@gmail.com, Instagram https://www.instagram.com/bndctdc/ (config.js → email, social).
 - A/B-geluid (ruw vs sounddesign) is geschrapt (te moeilijk).
 - Geen nummers (01, 02…) bij klikbare titels (home-tegels, portfolio). Diensten-lijst heeft ze nog.
 - Portfolio = werken gegroepeerd op soort, in de volgorde van config.js → groepen: Film, Commercieel, Documentaire, Animatie. Per groep een monospace-kop met dunne lijn, daaronder kaarten (still 16:9 + titel + één regel rol).
@@ -26,9 +32,9 @@ Freelance videograaf, fotograaf, sounddesigner en componist (film, media, games)
 - Placeholders zijn gemarkeerd met de klasse `.todo` (gestippelde rand).
 
 ## Nog open
-- Beeld voor hero en tegels; stills/synopsis/credits van Élan; Instagram- en andere sociale links (config.js)
+- Stills/synopsis/credits van Élan; eventueel meer sociale links (config.js → social)
 - Portfolio invullen: stills, embedUrls en rol per werk (config.js → portfolio); Alle getoonde werken hebben een eigen thumbnail en YouTube-link. Reportage en 2D motion graphics zijn verborgen (uitgecommentarieerd in config.js)
-- Tagline, Over-tekst in zijn eigen woorden, definitieve domeinnaam (bene.be? check beschikbaarheid + BOIP-merkcontrole; eigen naam in footer houden)
+- Over-tekst in zijn eigen woorden, definitieve domeinnaam (bene.be? check beschikbaarheid + BOIP-merkcontrole; eigen naam in footer houden)
 - Meerdere kleine projecten kunnen later een eigen pagina krijgen (kopieer elan.html)
 
 ## Werkwijze
