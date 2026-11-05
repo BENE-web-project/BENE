@@ -1,6 +1,15 @@
 // Pas hier je gegevens aan.
 const CONFIG={
   email:"bndctdc@gmail.com",
+  // Akkoordenreeks van het logo (uit akkoordsequentie.mid). Per akkoord 5 MIDI-nootnummers (60 = C4);
+  // de laagste noot klinkt op de onderste lijn, de hoogste op de bovenste. Alle 5 lijnen aangeraakt = volgend akkoord; na het laatste terug naar het eerste.
+  akkoorden:[
+    [55,67,71,74,77],   // G7:  G3 G4 B4 D5 F5
+    [60,64,67,72,76],   // C:   C4 E4 G4 C5 E5
+    [57,62,65,69,74],   // Dm:  A3 D4 F4 A4 D5
+    [55,60,64,67,72],   // C/G: G3 C4 E4 G4 C5
+    [55,62,65,67,71]    // G7:  G3 D4 F4 G4 B4
+  ],
   instrument:"strijkers",               // klank van het logo: "strijkers", "pad" (zacht, aanzwellend) of "sinus" (korte zachte tokkel)
   heroMedia:"",                         // leeg = zwart. Of een visual achter het logo: foto (.jpg/.webp) of korte loop (.mp4/.webm), bv. "media/hero.mp4"
   tiles:{portfolio:"media/elan-still-trein-scherper-v1.jpg",diensten:"media/diensten-still-v2.jpg",over:"media/over-still.jpg",contact:"media/contact-icoon-envolop-V2.jpg"},  // beeld per tegel op de homepagina, bv. "media/tile-portfolio.jpg"

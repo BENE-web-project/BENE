@@ -96,11 +96,15 @@ if(pj)pj.addEventListener('click',e=>{
   e.preventDefault();openPlayer(w);
 });
 
-/* Geluid: opt-in. Vijf tonen = G mineur-drieklank (G, B♭, D, G, B♭), één per lijn van het logo.
+/* Geluid: opt-in. Akkoordenreeks uit config.js (akkoorden): per akkoord één noot per lijn, laagste noot = onderste lijn.
+   Zijn alle vijf lijnen van het akkoord aangeraakt, dan schuift het door naar het volgende; na het laatste terug naar het eerste.
    Instrument kiezen in config.js (instrument: "pad" of "sinus"). Meerdere tonen klinken tegelijk:
    elke lijn heeft zijn eigen rustpauze, dus snel over alle lijnen vegen geeft het volledige akkoord. */
 const Sound=(()=>{
-  const NOTES=[196,233.08,293.66,392,466.16];
+  const CHORDS=((typeof CONFIG!=='undefined'&&CONFIG.akkoorden)||[[55,58,62,67,70]]).map(c=>[...c].sort((a,b)=>a-b));
+  const hz=m=>440*Math.pow(2,(m-69)/12);   // MIDI-nootnummer -> frequentie
+  let chord=0;const struck=new Set();
+  const noteFor=line=>{const c=CHORDS[chord];return hz(c[Math.max(0,c.length-1-line)])};   // lijn 0 = bovenste = hoogste noot
   let ctx,master,verb,padWave,strWave,vib,on=false,built=false,voices=0;const last={};
   const INSTR={
     // zachte sinus-tokkel: grondtoon + stille octaaf, korte aanzet, 3 s uitklank
@@ -156,14 +160,22 @@ const Sound=(()=>{
     master.connect(lim);master.connect(conv);conv.connect(verb);verb.connect(lim);lim.connect(ctx.destination);
     built=true;
   }
-  function pluck(i){
-    if(!on||!built)return;
-    const n=(i==null?Math.floor(Math.random()*NOTES.length):i)%NOTES.length,t=ctx.currentTime;
-    if(t-(last[n]??-9)<.3||voices>40)return;   // per toon begrensd tempo + veiligheidsgrens (±20 tonen tegelijk)
-    last[n]=t;instr().play(NOTES[n],t);
+  function play(line){
+    if(!on||!built)return false;
+    const t=ctx.currentTime;
+    if(t-(last[line]??-9)<.3||voices>40)return false;   // per lijn begrensd tempo + veiligheidsgrens (±20 tonen tegelijk)
+    last[line]=t;instr().play(noteFor(line),t);return true;
   }
+  // logo-lijn aangeraakt: speelt en telt mee voor de akkoordenreeks
+  function strike(line){
+    if(!play(line))return;
+    struck.add(line);
+    if(struck.size>=5){struck.clear();chord=(chord+1)%CHORDS.length}
+  }
+  // andere geluidjes (menu, knoppen): een noot uit het huidige akkoord, telt niet mee
+  function pluck(i){play(((i??Math.floor(Math.random()*5))%5+5)%5)}
   async function toggle(){if(!built)build();if(ctx.state==='suspended')await ctx.resume();on=!on;return on}
-  return{toggle,pluck,get on(){return on}};
+  return{toggle,pluck,strike,get on(){return on},get chord(){return chord}};
 })();
 /* Twee knoppen, één schakelaar: rechtsboven (#sound) en op de homepagina (.soundtoggle) */
 function soundUI(){
