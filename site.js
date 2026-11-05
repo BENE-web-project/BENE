@@ -96,28 +96,52 @@ if(pj)pj.addEventListener('click',e=>{
   e.preventDefault();openPlayer(w);
 });
 
-/* Geluid: opt-in. Vijf tonen = G mineur-drieklank (G, B♭, D, G, B♭), één per lijn van het logo. */
+/* Geluid: opt-in. Vijf tonen = G mineur-drieklank (G, B♭, D, G, B♭), één per lijn van het logo.
+   Instrument kiezen in config.js (instrument: "pad" of "sinus"). Meerdere tonen klinken tegelijk:
+   elke lijn heeft zijn eigen rustpauze, dus snel over alle lijnen vegen geeft het volledige akkoord. */
 const Sound=(()=>{
   const NOTES=[196,233.08,293.66,392,466.16];
-  let ctx,master,verb,on=false,built=false,lastT=0;
+  let ctx,master,verb,on=false,built=false,voices=0;const last={};
+  const INSTR={
+    // zachte sinus-tokkel: grondtoon + stille octaaf, korte aanzet, 3 s uitklank
+    sinus:{verb:.3,play(f,t){
+      [[1,.11],[2,.025]].forEach(([m,a])=>{
+        const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f*m;
+        g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(a,t+.05);g.gain.exponentialRampToValueAtTime(.0001,t+3);
+        o.connect(g).connect(master);o.start(t);o.stop(t+3.1);voice(o);
+      });
+    }},
+    // zachte pad: twee licht ontstemde zaagtanden + sinus, door een filter dat traag opengaat; trage aanzet, 4 s uitklank
+    pad:{verb:.45,play(f,t){
+      const flt=ctx.createBiquadFilter(),g=ctx.createGain(),end=t+4.2;
+      flt.type='lowpass';flt.Q.value=.5;
+      flt.frequency.setValueAtTime(350,t);flt.frequency.linearRampToValueAtTime(1300,t+.6);flt.frequency.exponentialRampToValueAtTime(500,end);
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.09,t+.45);g.gain.setTargetAtTime(0,t+.9,1);
+      flt.connect(g).connect(master);
+      [['sawtooth',-7,.35],['sawtooth',7,.35],['sine',0,.6]].forEach(([type,cents,a])=>{
+        const o=ctx.createOscillator(),og=ctx.createGain();o.type=type;o.frequency.value=f;o.detune.value=cents;og.gain.value=a;
+        o.connect(og).connect(flt);o.start(t);o.stop(end);voice(o);
+      });
+    }}
+  };
+  const instr=()=>INSTR[(typeof CONFIG!=='undefined'&&CONFIG.instrument)]||INSTR.pad;
+  function voice(o){voices++;o.onended=()=>voices--}
   function build(){
     ctx=new (window.AudioContext||window.webkitAudioContext)();
     master=ctx.createGain();master.gain.value=.4;
+    const lim=ctx.createDynamicsCompressor();   // vangt luide akkoorden op
+    lim.threshold.value=-18;lim.knee.value=12;lim.ratio.value=4;lim.attack.value=.01;lim.release.value=.3;
     const conv=ctx.createConvolver(),len=ctx.sampleRate*2.2,buf=ctx.createBuffer(2,len,ctx.sampleRate);
     for(let c=0;c<2;c++){const d=buf.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3)}
-    conv.buffer=buf;verb=ctx.createGain();verb.gain.value=.3;
-    master.connect(ctx.destination);master.connect(conv);conv.connect(verb);verb.connect(ctx.destination);
+    conv.buffer=buf;verb=ctx.createGain();verb.gain.value=instr().verb;
+    master.connect(lim);master.connect(conv);conv.connect(verb);verb.connect(lim);lim.connect(ctx.destination);
     built=true;
   }
   function pluck(i){
     if(!on||!built)return;
-    if(ctx.currentTime-lastT<.35)return;lastT=ctx.currentTime;
-    const f=NOTES[(i==null?Math.floor(Math.random()*NOTES.length):i)%NOTES.length],t=ctx.currentTime;
-    [[1,.11],[2,.025]].forEach(([m,a])=>{
-      const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f*m;
-      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(a,t+.05);g.gain.exponentialRampToValueAtTime(.0001,t+3);
-      o.connect(g).connect(master);o.start(t);o.stop(t+3.1);
-    });
+    const n=(i==null?Math.floor(Math.random()*NOTES.length):i)%NOTES.length,t=ctx.currentTime;
+    if(t-(last[n]??-9)<.3||voices>120)return;   // per toon begrensd tempo + veiligheidsgrens (±40 tonen tegelijk)
+    last[n]=t;instr().play(NOTES[n],t);
   }
   async function toggle(){if(!built)build();if(ctx.state==='suspended')await ctx.resume();on=!on;return on}
   return{toggle,pluck,get on(){return on}};
